@@ -13,7 +13,9 @@ Feature: Policyexpert home insurance test page
     And I enter main phone number "<phoneNumber>"
     And I enter email address "<emailAddress>"
     And I enter financial questions "<financialQuestion>"
-
+    And I enter address "<address>"
+    And I corresponding address "<corresAddress>"
+    And I enter property type "<propType>"
     Examples:
-      | title | firstName | lastName | dateOfBirth | maritalStatus | occupation    | otherOccupation | phoneNumber | emailAddress            |financialQuestion|
-      | Mr    | Joe       | Root     | 1-January-1990  | Married       | IT Consultant | No              | 01234567890 | vketipisz@qmetric.co.uk |No           |
+      | title | firstName | lastName | dateOfBirth    | maritalStatus | occupation    | otherOccupation | phoneNumber | emailAddress            | financialQuestion | address                                             | corresAddress | propType |
+      | Mr    | Joe       | Root     | 1-January-1990 | Married       | IT Consultant | No              | 01234567890 | vketipisz@qmetric.co.uk | No                | Policy Expert Ltd,110 Bishopsgate, London, EC2N 4AY | Yes           | House    |
