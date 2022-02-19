@@ -7,7 +7,12 @@ Feature: Policyexpert home insurance test page
     And I enter the first name "<firstName>"
     And I enter the last name "<lastName>"
     And I enter date of birth "<dateOfBirth>"
+    And I enter marital status "<maritalStatus>"
+    And I enter occupation "<occupation>"
+    And I enter other occupation "<otherOccupation>"
+    And I enter main phone number "<phoneNumber>"
+    And I enter email address "<emailAddress>"
 
-  Examples:
-    |title| firstName |lastName|dateOfBirth|
-    | Mr    | Joe | Root       |  01-01-1990  |
+    Examples:
+      | title | firstName | lastName | dateOfBirth | maritalStatus | occupation    | otherOccupation | phoneNumber | emailAddress            |
+      | Mr    | Joe       | Root     | 01-01-1990  | Married       | IT Consultant | No              | 01234567890 | vketipisz@qmetric.co.uk |

@@ -28,7 +28,23 @@ public class HomeInsurance {
 	private WebElement lastNameTxt;
 
 	@FindBy(css=".question-row-what-is-your-date-of .questionset-input .date-dropdowns .form-control")
-	List<WebElement> dateOfBirthSel;
+	private List<WebElement> dateOfBirthSel;
+
+	@FindBy(css=".question-row-what-is-your-marital .questionset-input .form-control")
+	private WebElement maritalStatusSel;
+
+
+	@FindBy(css=".question-row-what-is-your-occupat .questionset-input .form-control")
+	private WebElement occupationTxt;
+
+	@FindBy(css=".row question-row-do-you-have-another .questionset-input .btn-group .btn .btn-default")
+	private List<WebElement> otherOccupationBtn;
+
+	@FindBy(css=".question-row-main-phone-number .questionset-input .form-control")
+	private WebElement phoneNumberTxt;
+
+	@FindBy(css=".question-row-what-is-your-e-mail .questionset-input .form-control")
+	private WebElement emailTxt;
 
 
 	@BeforeAll
@@ -76,6 +92,35 @@ public class HomeInsurance {
 			setSelectValue(dob, dBirth[i++]);
 		}
 	}
+
+	@And("I enter marital status {string}")
+	public void i_enter_marital_status(String maritalStatus) {
+		setSelectValue(maritalStatusSel, maritalStatus);
+	}
+
+	@And("I enter occupation {string}")
+	public void i_enter_occupation(String occupation) {
+		setTextBoxValue(occupationTxt, occupation);
+	}
+
+
+	@And("I enter other occupation {string}")
+	public void i_enter_other_occupation(String otherOccupation) {
+		otherOccupationBtn.forEach(System.out::println);
+		//setTextBoxValue(otherOccupationBtn, otherOccupation);
+	}
+
+	@And("I enter main phone number {string}")
+	public void i_enter_phone_number(String phoneNumber) {
+		setTextBoxValue(phoneNumberTxt, phoneNumber);
+	}
+
+	@And("I enter email address {string}")
+	public void i_enter_email(String email) {
+		setTextBoxValue(emailTxt, email);
+	}
+
+
 
 	private void setSelectValue(WebElement webElement, String value){
 		Select select = new Select(webElement);
