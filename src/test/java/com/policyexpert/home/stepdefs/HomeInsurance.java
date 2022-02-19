@@ -4,6 +4,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 public class HomeInsurance {
 
@@ -27,7 +29,7 @@ public class HomeInsurance {
 	@FindBy(css=".question-row-last-name .questionset-input .form-control")
 	private WebElement lastNameTxt;
 
-	@FindBy(css=".question-row-what-is-your-date-of .questionset-input .date-dropdowns .form-control")
+	@FindBy(css=".question-row-what-is-your-date-of .questionset-input .form-control")
 	private List<WebElement> dateOfBirthSel;
 
 	@FindBy(css=".question-row-what-is-your-marital .questionset-input .form-control")
@@ -37,7 +39,7 @@ public class HomeInsurance {
 	@FindBy(css=".question-row-what-is-your-occupat .questionset-input .form-control")
 	private WebElement occupationTxt;
 
-	@FindBy(css=".row question-row-do-you-have-another .questionset-input .btn-group .btn .btn-default")
+	@FindBy(css=".question-row-do-you-have-another .questionset-input .btn-group .btn")
 	private List<WebElement> otherOccupationBtn;
 
 	@FindBy(css=".question-row-main-phone-number .questionset-input .form-control")
@@ -46,6 +48,8 @@ public class HomeInsurance {
 	@FindBy(css=".question-row-what-is-your-e-mail .questionset-input .form-control")
 	private WebElement emailTxt;
 
+	@FindBy(css=".question-row-you-are-answering-th .questionset-input .btn-group .btn")
+	private List<WebElement> financialIssuesBtn;
 
 	@BeforeAll
 	public static void initAll(){
@@ -101,13 +105,17 @@ public class HomeInsurance {
 	@And("I enter occupation {string}")
 	public void i_enter_occupation(String occupation) {
 		setTextBoxValue(occupationTxt, occupation);
+		occupationTxt.sendKeys(Keys.TAB);
+		occupationTxt.sendKeys(Keys.ENTER);
 	}
 
 
 	@And("I enter other occupation {string}")
 	public void i_enter_other_occupation(String otherOccupation) {
-		otherOccupationBtn.forEach(System.out::println);
-		//setTextBoxValue(otherOccupationBtn, otherOccupation);
+		Optional<WebElement> webElement = otherOccupationBtn.stream().filter(btn -> otherOccupation.equals(btn.getAccessibleName())).findFirst();
+		if(webElement.isPresent()){
+			clickButton(webElement.get());
+		}
 	}
 
 	@And("I enter main phone number {string}")
@@ -120,11 +128,21 @@ public class HomeInsurance {
 		setTextBoxValue(emailTxt, email);
 	}
 
-
+	@And("I enter financial questions {string}")
+	public void i_enter_financial_question(String financialQuestion) {
+		Optional<WebElement> webElement = financialIssuesBtn.stream().filter(btn -> financialQuestion.equals(btn.getAccessibleName())).findFirst();
+		if(webElement.isPresent()){
+			clickButton(webElement.get());
+		}
+	}
 
 	private void setSelectValue(WebElement webElement, String value){
 		Select select = new Select(webElement);
 		select.selectByVisibleText(value);
+	}
+
+	private void clickButton(WebElement webElement){
+		webElement.click();
 	}
 
 	private void setTextBoxValue(WebElement webElement, String value){

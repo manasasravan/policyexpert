@@ -12,7 +12,8 @@ Feature: Policyexpert home insurance test page
     And I enter other occupation "<otherOccupation>"
     And I enter main phone number "<phoneNumber>"
     And I enter email address "<emailAddress>"
+    And I enter financial questions "<financialQuestion>"
 
     Examples:
-      | title | firstName | lastName | dateOfBirth | maritalStatus | occupation    | otherOccupation | phoneNumber | emailAddress            |
-      | Mr    | Joe       | Root     | 01-01-1990  | Married       | IT Consultant | No              | 01234567890 | vketipisz@qmetric.co.uk |
+      | title | firstName | lastName | dateOfBirth | maritalStatus | occupation    | otherOccupation | phoneNumber | emailAddress            |financialQuestion|
+      | Mr    | Joe       | Root     | 1-January-1990  | Married       | IT Consultant | No              | 01234567890 | vketipisz@qmetric.co.uk |No           |
