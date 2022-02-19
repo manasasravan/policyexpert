@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+dependencies {
+    testImplementation 'io.cucumber:cucumber-java:7.0.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.0.0'
+
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.2'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    testImplementation "org.junit.vintage:junit-vintage-engine:5.8.2"
+    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'features', 'src/test/resources']
+        }
+    }
+}
