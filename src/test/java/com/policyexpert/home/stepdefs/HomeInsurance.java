@@ -20,6 +20,9 @@ public class HomeInsurance {
 	@FindBy(css=".question-row-title .questionset-input .form-control")
 	private WebElement titleSel;
 
+	@FindBy(css=".question-row-first-name .questionset-input .form-control")
+	private WebElement firstNameTxt;
+
 	@BeforeAll
 	public static void initAll(){
 		String driverProperty = "webdriver.chrome.driver";
@@ -46,6 +49,15 @@ public class HomeInsurance {
 	public void i_enter_the_title(String title) {
 		Select select = new Select(titleSel);
 		select.selectByVisibleText(title);
+	}
+
+	@And("I enter the first name {string}")
+	public void i_enter_the_first_name(String firstName) {
+		setTextBoxValue(firstNameTxt, firstName);
+	}
+
+	private void setTextBoxValue(WebElement webElement, String value){
+		webElement.sendKeys(value);
 	}
 
 }
