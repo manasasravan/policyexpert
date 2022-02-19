@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
+import java.util.List;
 
 public class HomeInsurance {
 
@@ -22,6 +23,13 @@ public class HomeInsurance {
 
 	@FindBy(css=".question-row-first-name .questionset-input .form-control")
 	private WebElement firstNameTxt;
+
+	@FindBy(css=".question-row-last-name .questionset-input .form-control")
+	private WebElement lastNameTxt;
+
+	@FindBy(css=".question-row-what-is-your-date-of .questionset-input .date-dropdowns .form-control")
+	List<WebElement> dateOfBirthSel;
+
 
 	@BeforeAll
 	public static void initAll(){
@@ -47,13 +55,31 @@ public class HomeInsurance {
 
 	@And("I enter the title {string}")
 	public void i_enter_the_title(String title) {
-		Select select = new Select(titleSel);
-		select.selectByVisibleText(title);
+		setSelectValue(titleSel, title);
 	}
 
 	@And("I enter the first name {string}")
 	public void i_enter_the_first_name(String firstName) {
 		setTextBoxValue(firstNameTxt, firstName);
+	}
+
+	@And("I enter the last name {string}")
+	public void i_enter_the_last_name(String lastName) {
+		setTextBoxValue(lastNameTxt, lastName);
+	}
+
+	@And("I enter date of birth {string}")
+	public void i_enter_date_of_birth(String dateOfBirth) {
+		String[] dBirth = dateOfBirth.split("-");
+		int i = 0;
+		for(WebElement dob: dateOfBirthSel){
+			setSelectValue(dob, dBirth[i++]);
+		}
+	}
+
+	private void setSelectValue(WebElement webElement, String value){
+		Select select = new Select(webElement);
+		select.selectByVisibleText(value);
 	}
 
 	private void setTextBoxValue(WebElement webElement, String value){
