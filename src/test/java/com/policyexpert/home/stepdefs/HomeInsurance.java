@@ -27,6 +27,6 @@ public class HomeInsurance {
 
 	@Given("I open the home insurance page {string}")
 	public void i_open_the_home_insurance_page(String website) {
-		webDriver.get(" https://insurance.policyexpert.co.uk/home");
+		webDriver.get(website);
 	}
 }
