@@ -16,6 +16,9 @@ configurations {
 }
 
 dependencies {
+    testImplementation 'io.cucumber:cucumber-java:7.0.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.0.0'
+
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.2'
 
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
@@ -24,4 +27,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'features', 'src/test/resources']
+        }
+    }
 }
