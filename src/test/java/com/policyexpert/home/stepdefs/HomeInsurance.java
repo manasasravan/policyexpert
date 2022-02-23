@@ -36,9 +36,11 @@ public class HomeInsurance {
     @FindBy(css = ".question-row-what-is-your-marital .questionset-input .form-control")
     private WebElement maritalStatusSel;
 
-
     @FindBy(css = ".question-row-what-is-your-occupat .questionset-input .form-control")
     private WebElement occupationTxt;
+
+    @FindBy(css = ".question-row-what-is-your-occupat .questionset-input .list-group")
+    private WebElement occupationLG;
 
     @FindBy(css = ".question-row-do-you-have-another .questionset-input .btn-group .btn")
     private List<WebElement> otherOccupationBtn;
@@ -115,8 +117,11 @@ public class HomeInsurance {
     @And("I enter occupation {string}")
     public void i_enter_occupation(String occupation) throws InterruptedException {
         setTextBoxValue(occupationTxt, occupation);
-        occupationTxt.sendKeys(Keys.TAB);
-        occupationTxt.sendKeys(Keys.TAB);
+        try {
+            occupationLG.sendKeys(Keys.ENTER);
+        }catch (Exception ex){
+            //Do nothing
+        }
     }
 
 
