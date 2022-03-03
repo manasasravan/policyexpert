@@ -54,6 +54,9 @@ public class HomeInsurance {
     @FindBy(css = ".question-row-you-are-answering-th .questionset-input .btn-group .btn")
     private List<WebElement> financialIssuesBtn;
 
+    @FindBy(css = ".question-row-address-of-the-prope .questionset-input .list-group")
+    private WebElement addressLG;
+
     @FindBy(css = ".question-row-address-of-the-prope .questionset-input .form-control")
     private WebElement addressTxt;
 
@@ -62,6 +65,22 @@ public class HomeInsurance {
 
     @FindBy(css = ".question-row-what-type-of-propert .questionset-input .form-control")
     private WebElement propertyTypeTxt;
+
+    @FindBy(css = ".question-row-which-of-these-best .form-control")
+    private WebElement typeOfHouseSel;
+
+    @FindBy(css = ".question-row-approximately-in-whi .questionset-input .form-control")
+    private WebElement propertyYearTxt;
+
+    @FindBy(css = ".question-row-how-many-bedrooms-do .questionset-input .form-control")
+    private WebElement numberOfBedroomsSel;
+
+    @FindBy(css = ".question-row-how-many-bathrooms .form-control")
+    private WebElement numberOfBathroomsSel;
+
+    @FindBy(xpath = "//div[@class='row question-row-is-the-property-your']//button[@type='button']")
+    private List<WebElement> propertyMainResidenceBtn;
+
 
     @BeforeAll
     public static void initAll() {
@@ -74,6 +93,8 @@ public class HomeInsurance {
         webDriver = new ChromeDriver();
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
+
+
 
     @Before
     public void init() {
@@ -144,15 +165,18 @@ public class HomeInsurance {
     }
 
     @And("I enter address {string}")
-    public void i_enter_address(String address) {
+    public void i_enter_address(String address) throws InterruptedException {
         setTextBoxValue(addressTxt, address);
-        addressTxt.sendKeys(Keys.TAB);
-        addressTxt.sendKeys(Keys.ENTER);
+        try{
+            addressLG.sendKeys(Keys.ENTER) ;
+        }catch (Exception ex) {
+
+        }
     }
 
     @And("I corresponding address {string}")
     public void i_enter_corres_address(String corresAddress) {
-        Optional<WebElement> webElement = correspondenceBtn.stream().filter(btn -> correspondenceBtn.equals(btn.getAccessibleName())).findFirst();
+        Optional<WebElement> webElement = correspondenceBtn.stream().filter(btn -> corresAddress.equals(btn.getAccessibleName())).findFirst();
         if (webElement.isPresent()) {
             clickButton(webElement.get());
         }
@@ -168,6 +192,34 @@ public class HomeInsurance {
     @And("I enter financial questions {string}")
     public void i_enter_financial_question(String financialQuestion) {
         Optional<WebElement> webElement = financialIssuesBtn.stream().filter(btn -> financialQuestion.equals(btn.getAccessibleName())).findFirst();
+        if (webElement.isPresent()) {
+            clickButton(webElement.get());
+        }
+    }
+
+    @And("I enter type of house {string}")
+    public void i_enter_type_of_house(String typeOfHouse) {
+        setSelectValue(typeOfHouseSel, typeOfHouse);
+    }
+
+    @And("I enter property year {string}")
+    public void i_enter_property_year (String propYear) {
+        setTextBoxValue(propertyYearTxt, propYear);
+    }
+
+    @And("I enter number of bedrooms {string}")
+    public void i_enter_number_Of_Bedrooms(String numberOfBedrooms){
+        setSelectValue(numberOfBedroomsSel,numberOfBedrooms) ;
+    }
+
+    @And("I enter number of bathrooms {string}")
+    public void i_enter_number_Of_Bathrooms(String numberOfBathrooms){
+        setSelectValue(numberOfBathroomsSel,numberOfBathrooms) ;
+    }
+
+    @And("I enter property main residence {string}")
+    public void i_enter_property_Main_Residence(String propertyMainResidence) {
+        Optional<WebElement> webElement = propertyMainResidenceBtn.stream().filter(btn -> propertyMainResidence.equals(btn.getAccessibleName())).findFirst();
         if (webElement.isPresent()) {
             clickButton(webElement.get());
         }
