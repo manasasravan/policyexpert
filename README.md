@@ -1,5 +1,5 @@
 # PolicyExpert
-Policyexpert Home insurance page test
+Policyexpert Home insurance page automation practice
 
 This is a sample project on PolicyExpert's Home insurance page. 
 
