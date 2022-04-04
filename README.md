@@ -1,7 +1,7 @@
 # PolicyExpert
-Policyexpert test
+Policyexpert Home insurance page test
 
-This is a PolicyExpert test. 
+This is a sample project on PolicyExpert's Home insurance page. 
 
 #Tools used
 * Java 8
